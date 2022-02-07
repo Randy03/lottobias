@@ -2,7 +2,9 @@ library(shiny)
 library(shinyjs)
 
 lotto_number <- {
-  numericInput("favNumber",label="What's your favourite number",value=0,min = 0)
+  numericInput("favNumber",label="What's your lucky favourite number",value=0,min = 0)
+  h4("Last winners")
+  dataTableOutput('winnersTable')
 }
 
 lotto_good_one <- {
