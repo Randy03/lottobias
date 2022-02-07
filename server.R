@@ -38,7 +38,7 @@ shinyServer(function(input, output) {
   
   observeEvent(input$select1,{
     
-    if (sample_idx == 1){
+    if (store$sample_idx == 1){
       
       store$list <- store$list %>% add_row(count=0)
       
@@ -60,7 +60,7 @@ shinyServer(function(input, output) {
   
   observeEvent(input$select2,{
     
-    if (sample_idx != 1){
+    if (store$sample_idx != 1){
       
       store$list <- store$list %>% add_row(count=0)
       
@@ -78,11 +78,11 @@ shinyServer(function(input, output) {
   })
     
 
-   
+    
     output$guess_right <- renderText(paste("You've found ", sum(store$list$count), " fake numbers !!"))
     
-    output$total_per <- renderText(paste0(sum(store$list$count), "/", length(store$list$count)-1,"\n","(",100*sum(store$list$count)/(length(store$list$count)-1), "%)" )) 
+    output$total_per <- renderText(paste0(sum(store$list$count), "/", length(store$list$count)-1,"\n","(",round(100*sum(store$list$count)/(length(store$list$count)-1),2), "%)" ))
     
-  
-  
+   
+     
 })
