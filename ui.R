@@ -1,14 +1,22 @@
 library(shiny)
 library(shinyjs)
 
+css <- "
+mark {
+  padding: 0;
+  background-color: yellow;
+  color: black;
+}
+"
+
 lotto_number <- fluidRow(
-  column(8,
+  column(6,
          numericInput("favNumber",label="What's your lucky favourite number",value=0,min = 0),
          h4("Last winners"),
          tableOutput('winnersTable')     
   ),
-  column(4,
-         verbatimTextOutput("lottoResult")
+  column(6,
+         h2(textOutput("lottoResult",inline=TRUE))
   )
 )
 
@@ -23,7 +31,9 @@ lotto_bad_one <- {
 }
 
 shinyUI(
-  fluidPage(
+  fluidPage(tags$head(
+    tags$style(HTML(css))
+  ),
     titlePanel("Lotto bias"),
     navlistPanel(
       id = "tabset",
