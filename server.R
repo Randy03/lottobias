@@ -11,7 +11,71 @@ create_lotto_df <-function(n){
 
 lotto_df <- create_lotto_df(10000)
 
+set.seed(666)
+
+guess_good_df <- create_lotto_df(10000)
+
 shinyServer(function(input, output) {
+  
   output$winnersTable <- renderTable(lotto_df %>% arrange(desc(date)) %>% slice_head(n=7))
+
+  
+  store <- reactiveValues()
+  
+  store$list <- list(0)
+  
+  store$num_select <- c(paste(lotto_df %>% sample_n(1) %>% select(number)),
+                    paste(guess_good_df %>% sample_n(1) %>% select(number)),
+                    sample(c(1, 2), 1))
+  
+  
+  output$sel_option_1 <- renderText(paste(store$num_select[sample_idx]))
+  
+  output$sel_option_2 <- renderText(paste(store$num_select[if(sample_idx==1){2} else{1}]))
+  
+  
+  observeEvent(input$select1,{
+    
+    if (sample_idx == 1){
+      
+      store$list <- append(store$list, 1)
+      
+    }
+    
+    else{store$list <- append(store$list, 0)}
+    
+    
+    store$num_select <- c(paste(lotto_df %>% sample_n(1) %>% select(number)),
+                      paste(guess_good_df %>% sample_n(1) %>% select(number)),
+                      sample(c(1, 2), 1))
+
+    
+  })
+  
+  
+  observeEvent(input$select2,{
+    
+    if (sample_idx != 1){
+      
+      store$list <- append(store$list, 1)
+      
+    }
+    
+    else{store$list <- append(store$list, 0)}
+    
+    
+    store$num_select <- c(paste(lotto_df %>% sample_n(1) %>% select(number)),
+                          paste(guess_good_df %>% sample_n(1) %>% select(number)),
+                          sample(c(1, 2), 1))
+    
+  })
+    
+
+   
+    output$guess_right <- renderText(paste("You've found ", sum(store$list), " fake numbers !!"))
+    
+    output$total_per <- renderText(paste0(sum(store$list), "/", length(store$list)-1,"\n","(",100*sum(store$list)/(length(store$list)-1), "%)" )) 
+    
+  
   
 })

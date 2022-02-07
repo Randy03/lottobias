@@ -1,5 +1,5 @@
 library(shiny)
-library(shinyjs)
+#library(shinyjs)
 
 lotto_number <- fluidRow(
   column(8,
@@ -13,8 +13,33 @@ lotto_number <- fluidRow(
 )
 
 lotto_good_one <- {
-  h4("Which one is a real lotto number?")
   
+  fluidRow(
+    column(12, h3("Which one is a real lotto number?"), align="center"),
+    br(),
+    br(),
+    fluidRow(
+      column(3, br()),
+      column(3, verbatimTextOutput('sel_option_1'), align="center"), 
+      column(6, actionButton("select1", "this one"), align="left")
+
+      ),
+    br(),
+    fluidRow(
+      column(3, br()),
+      column(3, verbatimTextOutput('sel_option_2'), align="center"),
+      column(6, actionButton("select2", "this one"), align="left")
+
+    ),
+    br(),
+    fluidRow(
+      column(12, textOutput('guess_right'), align="center")),
+    
+    br(),
+    fluidRow(
+      column(12, textOutput('total_per'), align="center"))
+    
+  )
 }
 
 lotto_bad_one <- {
