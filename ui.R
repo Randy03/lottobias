@@ -18,7 +18,26 @@ lotto_good_one <- {
 }
 
 lotto_bad_one <- {
-  h4("Which number is more likely to win lottery")
+  fluidRow(
+    column(12, h3("Which number is more likely to win lottery?", align='center'),
+           
+           
+    br(),
+    
+    fluidRow(
+      column(4, actionButton('right', textOutput('random_selector_1')), align='center'),
+      column(4, actionButton('middle', textOutput('random_selector_2')), align='center'),
+      column(4, actionButton('left', textOutput('random_selector_3')), align='center')),
+    
+    br(),
+    br(),
+    
+    fluidRow(
+      paste("You have selected ", '7', ' real random numbers and ', '3',' "Human-Trap numbers"'), align='center'),
+      br(),
+      column(12, align='center', '70%')
+    )
+  )
 
 }
 
