@@ -30,7 +30,7 @@ generate_random_lotto_number <- function(l){
 #lotto_hist_df <- create_lotto_df(10000)
 lotto_hist_df <- read.csv("Lottery_NY_Lotto_Winning_Numbers__Beginning_2001.csv") %>% 
   select(Draw.Date,Winning.Numbers) %>% 
-  mutate(Winning.Numbers = str_replace_all(Winning.Numbers," ",""))
+  mutate(Draw.Date=as.Date(Draw.Date, "%m/%d/%Y"),Winning.Numbers = str_replace_all(Winning.Numbers," ",""))
 names(lotto_hist_df) <- c('date','number')
 
 #trap_numbers_df <- create_trap_numbers_df(10000)
