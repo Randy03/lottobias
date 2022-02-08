@@ -79,9 +79,24 @@ shinyServer(function(input, output) {
     
 
     
-    output$guess_right <- renderText(paste("You've found ", sum(store$list$count), " fake numbers !!"))
+    output$guess_right <- renderText({
+      
+      if(length(store$list$count)-1 > 0){
+      
+        paste("You've found ", sum(store$list$count), " fake numbers !!")  
+        
+      }
+      
+      })
     
-    output$total_per <- renderText(paste0(sum(store$list$count), "/", length(store$list$count)-1,"\n","(",round(100*sum(store$list$count)/(length(store$list$count)-1),2), "%)" ))
+    output$total_per <- renderText({
+      if(length(store$list$count)-1 > 0){
+        
+        paste0(sum(store$list$count), "/", length(store$list$count)-1,"\n","(",round(100*sum(store$list$count)/(length(store$list$count)-1),2), "%)")  
+        
+      }
+      
+      })
     
    
      
