@@ -24,7 +24,7 @@ h5 {
 lotto_number <- fluidRow(
   column(2),
   column(3,
-         numericInput("favNumber",label="What's your lucky favourite number",value=0,min = 0),
+         textInput("favNumber",label="What's your lucky favourite number"),
          h4("Last winners"),
          tableOutput('winnersTable')     
   ),
