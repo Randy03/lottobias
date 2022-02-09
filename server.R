@@ -57,7 +57,7 @@ shinyServer(function(input, output) {
   
   lotto_numbers_result_visible <- FALSE
   lotto_numbers_result <- reactive({
-    req(nchar(input$favNumber)>1)
+    req(nchar(input$favNumber)>0)
     lotto_numbers_result_visible <<- TRUE
     rights <- lotto_hist_df %>% filter(str_detect(number,input$favNumber)) %>% nrow()
     total <- nrow(lotto_hist_df)
@@ -121,7 +121,7 @@ shinyServer(function(input, output) {
           " fake numbers !!\n",good_bad_values$right,
           "/",good_bad_values$total,
           "(",good_bad_values$pctg,
-          ")%"),""))
+          "%)"),""))
   
   
   
