@@ -42,8 +42,8 @@ trap_numbers_df <- data.frame(trap_numbers)
 shinyServer(function(input, output) {
   
   #Favourite Numbers
+  
   lotto_numbers_table_hist <- reactive({
-    req(as.numeric(input$favNumber)>10)
     lotto_hist_df %>% 
       arrange(desc(date))  %>% 
       slice_head(n=7) %>% 
@@ -55,7 +55,10 @@ shinyServer(function(input, output) {
       )
   })
   
+  lotto_numbers_result_visible <- FALSE
   lotto_numbers_result <- reactive({
+    req(nchar(input$favNumber)>1)
+    lotto_numbers_result_visible <<- TRUE
     rights <- lotto_hist_df %>% filter(str_detect(number,input$favNumber)) %>% nrow()
     total <- nrow(lotto_hist_df)
     pctg <- round(rights*100/total,2)
@@ -64,9 +67,10 @@ shinyServer(function(input, output) {
   
   output$winnersTable <- renderTable(lotto_numbers_table_hist(), sanitize.text = function(x) x)
   output$favNumberResult <- renderText(
+    if_else(lotto_numbers_result_visible,
     paste("You guess right \n",lotto_numbers_result()[1],
           "lottos of \n",lotto_numbers_result()[2],
-          "lottos \n","(",lotto_numbers_result()[3],"%)"))
+          "lottos \n","(",lotto_numbers_result()[3],"%)"),""))
   
   #Good numbers
   
